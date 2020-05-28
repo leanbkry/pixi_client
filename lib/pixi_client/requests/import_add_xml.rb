@@ -1,7 +1,7 @@
 module PixiClient
   module Requests
     class ImportAddXML < Base
-      attr_accessor :xml
+      attr_accessor :xml, :operationType, :channelRef
 
       def initialize(xml, operationType, channelRef)
         self.xml = xml
