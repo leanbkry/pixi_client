@@ -50,9 +50,14 @@ module PixiClient
     end
 
     def unparsed_rows
-      return [] if response_body[:sql_row_set].nil?
-      return [] if response_body[:sql_row_set][:diffgram].nil?
-      return [] if response_body[:sql_row_set][:diffgram][:sql_row_set1].nil?
+      begin
+        return [] if response_body[:sql_row_set].nil?
+        return [] if response_body[:sql_row_set][:diffgram].nil?
+        return [] if response_body[:sql_row_set][:diffgram][:sql_row_set1].nil?
+      rescue
+        Rails.logger.error "Could not parse Pixi Response SQL Row"
+        return []
+      end
 
       rowset = response_body[:sql_row_set][:diffgram][:sql_row_set1][:row]
 
